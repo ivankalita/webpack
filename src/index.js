@@ -8,5 +8,13 @@
  */
 
 import './js/common'
-import './styl/main.styl'
+import './assets/styl/main.styl'
 import 'bootstrap/dist/css/bootstrap.min.css'
+
+window.Vue = require('vue')
+Vue.component('example-component', require('./components/Example.vue').default)
+
+// Vue init
+const app = new Vue({
+    el: '#app'
+})
