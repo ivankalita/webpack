@@ -1,9 +1,9 @@
-# SPA template
+# MPA template
 
 ## Usage
-This is a template for Single Page Application
+This is a template for Multiple Pages Application
 ```
-$ cd spatemplate-master
+$ cd webpack-mpa
 $ npm install
 $ npm run dev
 ```
