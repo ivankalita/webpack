@@ -1,7 +1,7 @@
 {
-  "name": "mpa",
+  "name": "vue-mpa",
   "version": "1.0.0",
-  "description": "Webpack config MPA PUG+Sylus",
+  "description": "Webpack config MPA Vue+PUG+Sylus",
   "main": "index.js",
   "author": "IvanKalita",
   "license": "MIT",
@@ -30,9 +30,13 @@
     "postcss-loader": "^3.0.0",
     "pug": "^2.0.4",
     "pug-loader": "^2.4.0",
+    "pug-plain-loader": "^1.0.0",
     "style-loader": "^1.0.0",
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",
+    "vue-loader": "^15.7.0",
+    "vue-style-loader": "^4.1.2",
+    "vue-template-compiler": "^2.6.10",
     "webpack": "^4.39.3",
     "webpack-cli": "^3.3.8",
     "webpack-dev-server": "^3.8.0",
@@ -41,6 +45,7 @@
   "dependencies": {
     "bootstrap": "^4.3.1",
     "jquery": "^3.4.1",
-    "popper.js": "^1.15.0"
+    "popper.js": "^1.15.0",
+    "vue": "^2.6.10"
   }
 }

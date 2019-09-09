@@ -3,12 +3,13 @@ const fs = require('fs')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin') 
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const { VueLoaderPlugin } = require('vue-loader')
 const PATHS = { // объект PATHS для более удобного обращения с путями, да и краткости записей
     source: path.join(__dirname, '../src'),
     dist: path.join(__dirname, '../dist'),
     assets: 'assets/'
 }
-const PAGES_DIR = `${PATHS.source}/jade/pages/`
+const PAGES_DIR = `${PATHS.source}/pug/pages/`
 const PAGES = fs.readdirSync(PAGES_DIR).filter(filename => filename.endsWith('.pug'))
 
 module.exports = {
@@ -56,28 +57,38 @@ module.exports = {
                 ]
             },
             {
-                test: /\.styl$/,
+                test: /\.styl(us)?$/,
                 use: [
-                    'style-loader',
-                    MiniCssExtractPlugin.loader,
+                    'vue-style-loader',
                     'css-loader',
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            sourceMap: true,
-                            config: {
-                                path: `${PATHS.source}/js/postcss.config.js`
-                            }
-                        }
-                    },
                     'stylus-loader'
                 ]
             },
             {
                 test: /\.pug$/,
-                loader: 'pug-loader'
+                oneOf: [
+                    // это применяется к `<template lang="pug">` в компонентах Vue
+                    {
+                        resourceQuery: /^\?vue/,
+                        use: ['pug-plain-loader']
+                    },
+                    // это применяется к импортам pug внутри JavaScript
+                    {
+                        use: ['pug-loader']
+                    }
+                ]
             },
+            {
+                test: /\.vue$/,
+                loader: 'vue-loader',
+            }
         ]
+    },
+    resolve: {
+        alias: {
+            '~': PATHS.source,
+            'vue$': 'vue/dist/vue.js',
+        }
     },
     plugins: [  // массив для подключения плагинов
             new MiniCssExtractPlugin({
@@ -85,7 +96,7 @@ module.exports = {
             }),
             new CopyWebpackPlugin([ // для каждого каталога с целью копирования создается свой объект (откуда - куда)
                 {
-                    from: `${PATHS.source}/images`,
+                    from: `${PATHS.source}/${PATHS.assets}images`,
                     to: `${PATHS.assets}images`
                 },
                 {
@@ -97,5 +108,6 @@ module.exports = {
                 template: `${PAGES_DIR}/${page}`,   // *.pug
                 filename: `./${page.replace(/\.pug/, '.html')}`  // *.html
             })),
+            new VueLoaderPlugin(),
         ],
 }
