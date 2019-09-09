@@ -1,4 +1,5 @@
 const path = require('path') // необходимо для корректного формирования путей в разных ОС
+const fs = require('fs')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin') 
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
@@ -7,6 +8,8 @@ const PATHS = { // объект PATHS для более удобного обр�
     dist: path.join(__dirname, '../dist'),
     assets: 'assets/'
 }
+const PAGES_DIR = `${PATHS.source}/jade/pages/`
+const PAGES = fs.readdirSync(PAGES_DIR).filter(filename => filename.endsWith('.pug'))
 
 module.exports = {
     externals: {    // здесь мы публикуем константу PATHS, чтобы не пришлось копировать её в build, dev
@@ -72,9 +75,7 @@ module.exports = {
             },
             {
                 test: /\.pug$/,
-                use: [
-                    'pug-loader'
-                ]
+                loader: 'pug-loader'
             },
         ]
     },
@@ -92,9 +93,9 @@ module.exports = {
                     to: ''
                 }
             ]),
-            new HtmlWebpackPlugin({
-                hash: false,
-                template: `${PATHS.source}/jade/index.pug`,
-            }),
+            ...PAGES.map(page => new HtmlWebpackPlugin({
+                template: `${PAGES_DIR}/${page}`,   // *.pug
+                filename: `./${page.replace(/\.pug/, '.html')}`  // *.html
+            })),
         ],
 }
