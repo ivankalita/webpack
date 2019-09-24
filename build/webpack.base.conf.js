@@ -1,4 +1,5 @@
 const path = require('path') // необходимо для корректного формирования путей в разных ОС
+const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin') 
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
@@ -96,5 +97,10 @@ module.exports = {
                 hash: false,
                 template: `${PATHS.source}/jade/index.pug`,
             }),
+            new webpack.ProvidePlugin({
+                $: 'jquery',
+                jQuery: 'jquery',
+                "window.jQuery": 'jquery'
+            })
         ],
 }
