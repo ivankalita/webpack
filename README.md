@@ -1,7 +1,7 @@
-# SPA template
+# Config for layouts single-page template
 
 ## Usage
-This is a template for Single Page Application
+Execute there are commands for start webpack-dev-server:
 ```
 $ cd webpack-spa
 $ npm install
