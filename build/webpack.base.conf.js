@@ -95,7 +95,7 @@ module.exports = {
             ]),
             new HtmlWebpackPlugin({
                 hash: false,
-                template: `${PATHS.source}/jade/index.pug`,
+                template: `${PATHS.source}/pug/index.pug`,
             }),
             new webpack.ProvidePlugin({
                 $: 'jquery',
