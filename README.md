@@ -1,4 +1,4 @@
-# SPA template
+# Vue SPA template
 
 ## Usage
 This is a template for Single Page Application
@@ -8,6 +8,7 @@ $ npm install
 $ npm run dev
 ```
 ## What's included
++ VueJS
 + PUG
 + Stylus
 + Bootstrap
